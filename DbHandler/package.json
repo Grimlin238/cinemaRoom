@@ -1,0 +1,11 @@
+{
+  "name": "dbhandler",
+  "version": "1.0.0",
+  "description": "Handles database operations such as storing updating and retrieving ",
+  "main": "DbHandler.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Tyian Lashley",
+  "license": "ISC"
+}
