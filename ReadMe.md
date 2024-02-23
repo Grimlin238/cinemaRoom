@@ -16,5 +16,5 @@ In a separate shell, start the mongodb service using your prefered method. Here'
 brew services start mongodb-community@7.0
 ## Step 4
 Head back to the other opened shell, navigate to the project folder and type node index.js. The message "I'm running on port 8080" will print.
-$## Step 5
+## Step 5
 Go to http://localhost:8080/ and create an account or login with the one that's already there.'""
