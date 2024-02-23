@@ -1,0 +1,14 @@
+{
+  "name": "dbconnectionhandler",
+  "version": "1.0.0",
+  "description": "Handles database connection operations.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Tyian Lashley",
+  "license": "ISC",
+  "dependencies": {
+    "mongodb": "^6.3.0"
+  }
+}
