@@ -3,7 +3,7 @@
 # Any copying of the code in this repo is strictly prohibited with out permision
 # About Cinema Room
 Cinema Room is a webapp that allows one to lookup movies and write reviews. Users can search for movies, lookup latest titles and more. Users also have the ability to see the movies they have reviewed.
-
+Made possible with TMDB - The Movie Database.
 ## Instructions
 ## Prereqs
 You need to have mongodb, and npm install on your machine before running the program..
