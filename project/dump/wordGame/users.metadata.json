@@ -1,1 +1,0 @@
-{"options":{"validator":{"$jsonSchema":{"properties":{"_id":{"bsonType":"objectId"},"username":{"bsonType":"string"},"password":{"bsonType":"string"}},"bsonType":"object","required":["username","password"]}}},"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_"}],"uuid":"0611420d9f9b47ca826330cc52e3b2e2","collectionName":"users","type":"collection"}
