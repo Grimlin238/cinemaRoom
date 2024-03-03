@@ -9,6 +9,7 @@
   "author": "Tyian Lashley",
   "license": "ISC",
   "dependencies": {
+    "apihandler": "file:../ApiHandler/ApiHandler-1.0.0.tgz",
     "dbconnectionhandler": "file:../DbConnectionHandler/DbConnectionHandler-1.0.0.tgz",
     "dbhandler": "file:../DbHandler/DbHandler-1.0.0.tgz",
     "express": "^4.18.2"
