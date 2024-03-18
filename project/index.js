@@ -81,7 +81,19 @@ app.get('/movie/:id', async (req, res) => {
 					page += `<p>${movie.overview}</p>`;
 					
 					page += `<form method="post">`
+					
+					let reviews = await dbh.getReviews(movie.original_title)
+					
 					page += '<h1> Reviews Given </h1>';
+					
+					for (let i = 0; i < reviews.length; i++) {
+						
+						page += `<p> ${reviews[i].movieReview}`
+						page += '<br>'
+						page += ` - review by @${reviews[i].movieReviewBy} </p>`
+						
+					}
+					
 					page += '<textarea name="review" placeholder="Leave a review"></textarea>'
 					page += "<button> Submit Review </button>";
 					page += '</form>'

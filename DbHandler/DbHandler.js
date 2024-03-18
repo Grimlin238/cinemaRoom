@@ -50,6 +50,34 @@ class DbHandler {
 		}
 	}
 	
+	static async getReviews(title) {
+		
+		try {
+			
+			const base = await db.get('CinemaRoom');
+			
+			const collection = await db.getCollection('reviewdata');
+			
+			const reviews = await collection.find({movieTitle: title}).toArray();
+			
+			if (reviews) {
+				
+				return reviews;
+				
+			} else {
+				
+				console.log('No reviews found');
+			}
+		} catch (err) {
+			
+			console.error(err);
+			
+			throw err;
+			
+		}
+		
+	}
+	
 	static async isUserExists(user, pass) {
 		
 		try {
