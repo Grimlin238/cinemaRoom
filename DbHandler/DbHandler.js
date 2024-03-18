@@ -1,6 +1,32 @@
 var db = require('DbConnectionHandler')
 
 class DbHandler {
+
+	static async addReview(title, image, description, review, user) {
+		
+		try {
+			
+			const base = await db.get("CinemaRoom");
+			
+			const collection = await db.getCollection("reviewdata");
+			
+			const result = await collection.insertOne({
+				
+				movieTitle: title,
+				movieImage: image,
+				movieDescription: description,
+				movieReview: review,
+				movieReviewBy: user
+				
+			})
+		} catch (err) {
+			
+			console.error(err);
+			throw err;
+			
+		}
+		
+	}
 	
 	static async addUser(user, pass) {
 		
