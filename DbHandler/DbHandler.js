@@ -50,6 +50,34 @@ class DbHandler {
 		}
 	}
 	
+	static async getMovies(user) {
+		
+		try {
+			
+			const base = await db.get('CinemaRoom')
+			
+			const collection = await db.getCollection('reviewdata')
+			
+			const movies = await collection.find({movieReviewBy: user}).toArray()
+			
+			if (movies) {
+				
+				return movies
+				
+			} else {
+				
+				console.log('Could not locate data')
+				
+			}
+		} catch (err) {
+			
+			console.error(err)
+			
+			throw err
+			
+		}
+	}
+	
 	static async getReviews(title) {
 		
 		try {
@@ -76,8 +104,8 @@ class DbHandler {
 			
 		}
 		
-	}
-	
+	}	
+
 	static async isUserExists(user, pass) {
 		
 		try {

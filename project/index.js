@@ -21,9 +21,30 @@ app.get('/create', (req, res) => {
 	res.send('<form method="post"> <h1> Username? </h1> <input name="username"> <h1> Password? </h1> <input type="password" name="password"> <button> Create </button> </form>');
 } )
 
-app.get('/home', (req, res) => {
+app.get('/home', async (req, res) => {
 	
-	res.send('<nav> <a href="/home"> Home </a> <a href="/latest"> Latest Movies </a> <a href="/search"> Search For Movies </a> </nav>');
+try {
+	
+	let myMovies = await dbh.getMovies(globalUser)
+	
+	let page = '<nav> <a href="/home"> Home </a> <a href="/latest"> Latest Movies </a> <a href="/search"> Search </a> </nav> <h1> My Movies </h1>'
+	
+	for (let i = 0; i < myMovies.length; i++) {
+		
+			page += `<h2> ${myMovies[i].movieTitle} </h2>`
+		
+		page += `<img src="${myMovies[i].movieImage}" alt="${myMovies[i].movieTitle}"`
+	}
+	
+	res.send(page)
+	
+} catch (err) {
+	
+	console.log(err)
+	
+	res.status(500).send('There was an issue on the server side')
+	
+}
 })
 
 app.get('/latest', async (req, res) => {
