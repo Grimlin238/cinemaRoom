@@ -133,7 +133,7 @@ app.get('/mymovie/:id', async (req, res) => {
 		
 		const movieId = req.params.id;
 		
-		const movie = await dbh.getReviewById(movieId, globalUser)
+		let movie = await dbh.getReviewById(movieId, globalUser)
 		
 		let page = '<nav> <a href="/home"> Back to My Movies </a> </nav>'
 		
@@ -149,8 +149,68 @@ app.get('/mymovie/:id', async (req, res) => {
 			
 			page += `<p> ${movie[i].movieReview} </p>`
 			
+		page += '<button onclick="deleteReview()"> Delete Review </button>'
+		
+		page += '<button onclick="editReview()"> Edit Review </button>'
+		
+		page += `<script>
+		
+		function deleteReview() {
+		const confirmed = confirm('Are you sure you want to delete this review. This action can not be undone');
+		
+		if (confirmed) {
+		
+		fetch("/mymovie/${movieId}", {
+		
+		method: "DELETE"
+		}) .then(() => {
+		
+		window.location.href = "/home"
+		}) .catch((error) => {
+			console.error(error)
+		
+		alert('There was an issue communicating with the server, and the movie was not deleted')
+		})
+		}
 		}
 		
+		function editReview() {
+		
+		let review = prompt("Edit review for ${movie[i].movieTitle}", "${movie[i].movieReview}");
+	
+	if (review && review.length > 0 && review.trim() !== "") {
+	
+	fetch("/mymovie/${movieId}", {
+	
+	method: 'PUT',
+		
+		headers: {
+	
+	'Content-Type': 'application/json'
+	
+	},
+	
+	body: JSON.stringify({
+	
+	review
+		
+	})
+}) .then (() => {
+
+window.location.href = "/mymovie/${movieId}"
+	
+}) .catch((err) => {
+
+console.error(err)
+
+alert('An issue occured, and your review was not updated.')
+
+})  
+	}
+	}
+		
+		</script>`
+}
 		res.send(page)
 		
 	} catch (err) {
@@ -165,6 +225,24 @@ app.get('/mymovie/:id', async (req, res) => {
 app.get('/search', (req, res) => {
 	res.send('<nav> <a href="/home"> Home </a> <a href="/latest"> Latest Movies </a> <a href="/search"> Search </a> </nav> <form method="post"> <h1> Search For Movies </h1> <input name="movieSearch"> <button> Search </button> </form>')
 	
+})
+
+app.delete('/mymovie/:id', async (req, res) => {
+	
+	try {
+		
+		const movieId = req.params.id
+		
+		await dbh.removeReview(movieId, globalUser)
+		
+		res.redirect('/home')
+		
+	} catch (err) {
+		
+		console.error(err)
+		res.status(500).send('There was an issue on the server side')
+		
+	}
 })
 
 app.post('/create', async (req, res) => {
@@ -268,6 +346,26 @@ app.post('/search', async (req, res) => {
         res.status(500).send('Error fetching search results');
     }
 });
+
+app.put('/mymovie/:id', async (req, res) => {
+	
+	try {
+		
+		const movieId = req.params.id;
+		
+		const review = req.body.review
+		
+		await dbh.updateReview(movieId, globalUser, review)
+		
+		res.redirect('/mymovie/:id')
+		
+	} catch (err) {
+		
+		console.error(err)
+		
+		res.status(500).send('There was an issue on the server side')
+	}
+})
 
 app.listen(8080, () => {	
 	console.log("I\'m listening on port 8080");

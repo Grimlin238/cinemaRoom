@@ -170,7 +170,60 @@ console.error(err)
 		throw err;
 		
 	}
-	}	
+	}
+	
+	static async removeReview(id, user) {
+		
+		try {
+			
+			const base = await db.get('CinemaRoom')
+			
+			const collection = await db.getCollection('reviewdata')
+			
+			const remove = await collection.deleteOne({
+				
+				_id: new ObjectId(id),
+				movieReviewBy: user
+				
+			})
+			
+		} catch (err) {
+			
+			console.log(err)
+			throw err
+		}
+	}
+	
+	static async updateReview(id, user, newReview) {
+		
+		try {
+			
+			const base = await db.get('CinemaRoom')
+			
+			const collection = await db.getCollection('reviewdata')
+			
+			const update = await collection.updateOne({
+				
+				_id: new ObjectId(id),
+				movieReviewBy: user
+				
+			}, {
+				
+				$set: {
+					
+					movieReview: newReview
+					
+				}
+			})
+			
+		} catch (err) {
+			
+			console.error(err)
+			
+			throw err
+			
+		}
+	}
 }
 
 module.exports = DbHandler;
