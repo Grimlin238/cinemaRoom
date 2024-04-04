@@ -1,4 +1,5 @@
-var db = require('DbConnectionHandler')
+const { ObjectId } = require('mongodb');
+const db = require('DbConnectionHandler')
 
 class DbHandler {
 
@@ -104,7 +105,40 @@ class DbHandler {
 			
 		}
 		
-	}	
+	}
+	
+	static async getReviewById(id, user) {
+		
+		try {
+			
+			const base = await db.get('CinemaRoom')
+			
+			const collection = await db.getCollection('reviewdata')
+			
+			const movies = await collection.find({
+				
+				_id: new ObjectId(id),
+				movieReviewBy: user
+				
+			}).toArray()
+			
+			if (movies) {
+				
+				return movies;
+				
+			} else {
+				
+				console.log('Could not find movie')
+				
+			}
+			
+		} catch (err) {
+			
+console.error(err)
+		
+			throw err;
+		}
+	}
 
 	static async isUserExists(user, pass) {
 		

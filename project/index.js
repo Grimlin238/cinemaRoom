@@ -31,7 +31,7 @@ try {
 	
 	for (let i = 0; i < myMovies.length; i++) {
 		
-			page += `<h2> ${myMovies[i].movieTitle} </h2>`
+			page += `<h2> <a href="/mymovie/${myMovies[i]._id}"> ${myMovies[i].movieTitle} <a/> </h2>`
 		
 		page += `<img src="${myMovies[i].movieImage}" alt="${myMovies[i].movieTitle}"`
 	}
@@ -127,6 +127,41 @@ app.get('/movie/:id', async (req, res) => {
 						}
 })
 
+app.get('/mymovie/:id', async (req, res) => {
+	
+	try {
+		
+		const movieId = req.params.id;
+		
+		const movie = await dbh.getReviewById(movieId, globalUser)
+		
+		let page = '<nav> <a href="/home"> Back to My Movies </a> </nav>'
+		
+		for (let i = 0; i < movie.length; i++) {
+			
+			page += `<h1> ${movie[i].movieTitle} </h1>`
+			
+			page += `<img src="${movie[i].movieImage} alt="${movie[i].movieTitle}">`
+			
+			page += `<p> ${movie[i].movieDescription} </p>`
+			
+			page += '<h2> Your review </h2>'
+			
+			page += `<p> ${movie[i].movieReview} </p>`
+			
+		}
+		
+		res.send(page)
+		
+	} catch (err) {
+		
+		console.error(err)
+		
+		res.status(500).send('There was an issue on the server side')
+	}
+	
+})
+
 app.get('/search', (req, res) => {
 	res.send('<nav> <a href="/home"> Home </a> <a href="/latest"> Latest Movies </a> <a href="/search"> Search </a> </nav> <form method="post"> <h1> Search For Movies </h1> <input name="movieSearch"> <button> Search </button> </form>')
 	
@@ -188,8 +223,8 @@ app.post('/movie/:id', async (req, res) => {
 			await dbh.addReview(movie.original_title, `https://image.tmdb.org/t/p/w500${movie.poster_path}`, movie.overview, review, globalUser);
 				
 				res.send(`
-					<h1> movie submited </h1>
-					<p> Review submited for ${movie.original_title}
+					<h1> movie submitted </h1>
+					<p> Review submitted for ${movie.original_title}
 					<a href="/movie/${movie.id}"> Back to review </a>`)			
 			} else {
 				
