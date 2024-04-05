@@ -27,47 +27,31 @@ try {
 	
 	let myMovies = await dbh.getMovies(globalUser)
 	
-	let page = '<nav> <a href="/home"> Home </a> <a href="/latest"> Latest Movies </a> <a href="/search"> Search </a> </nav> <h1> My Movies </h1>'
+	let page = '<nav> <a href="/home"> Home </a> <a href="/top10"> Top 10 </a> <a href="/search"> Search </a> </nav> <h1> My Movies </h1>'
 	
+	if (myMovies) {
+		
 	for (let i = 0; i < myMovies.length; i++) {
 		
 			page += `<h2> <a href="/mymovie/${myMovies[i]._id}"> ${myMovies[i].movieTitle} <a/> </h2>`
 		
 		page += `<img src="${myMovies[i].movieImage}" alt="${myMovies[i].movieTitle}"`
 	}
+} else {
+	
+	page += '<p> Your reviewed movies will appear here </p>'
+}
 	
 	res.send(page)
 	
 } catch (err) {
 	
-	console.log(err)
+	console.error(err)
 	
 	res.status(500).send('There was an issue on the server side')
 	
 }
 })
-
-app.get('/latest', async (req, res) => {
-    let page = '<nav> <a href="/home"> Home </a> <a href="/latest"> Latest Movies </a> <a href="/search"> Search </a> </nav> <h1> Latest Movies </h1>';
-
-    try {
-        const response = await fetch("https://api.themoviedb.org/3/movie/latest?api_key=a26a1684ba14b7b49ebbd51f98eb95f7");
-        const data = await response.json();
-        const movie = data
-			
-            page += `<h1> <a href="/movie/${movie.id}">${movie.original_title} </a></h1>`;
-            if (movie.poster_path) {
-                page += `<img src="https://image.tmdb.org/t/p/w500${movie.poster_path}" alt="${movie.original_title}">`;
-            } else {
-                page += "<p>No image for movie</p>";
-            }
-
-        res.send(page);
-    } catch (error) {
-        console.error(error);
-        res.status(500).send('Error fetching latest movies');
-    }
-});
 
 app.get('/login', (req, res) => {
 	
@@ -86,7 +70,7 @@ app.get('/movie/:id', async (req, res) => {
 			
 			const movie = data;
 			
-			let page = `<nav><a href="/home">Home</a><a href="/latest">Latest Movies</a><a href="/search">Search</a></nav>`;
+			let page = `<nav><a href="/home"> Home </a><a href="/top10"> Top 10 </a><a href="/search"> Search </a></nav>`;
 			
 			        page += `<h1>${movie.original_title}</h1>`;
 				
@@ -222,8 +206,34 @@ alert('An issue occured, and your review was not updated.')
 	
 })
 
+app.get('/top10', async (req, res) => {
+    let page = '<nav> <a href="/home"> Home </a> <a href="/top10"> Top 10 </a> <a href="/search"> Search </a> </nav> <h1> Top 10 Movies </h1>';
+    try {
+        const response = await fetch("https://api.themoviedb.org/3/movie/top_rated?api_key=a26a1684ba14b7b49ebbd51f98eb95f7");
+        const data = await response.json();
+        const movies = data.results;
+		
+		if (movies && movies.length >= 0) {
+			
+			movies.slice(0, 10).forEach(movie => {
+				
+        page += `<h1> <a href="/movie/${movie.id}">${movie.original_title} </a></h1>`;
+        if (movie.poster_path) {
+            page += `<img src="https://image.tmdb.org/t/p/w500${movie.poster_path}" alt="${movie.original_title}">`;
+        } else {
+            page += "<p>No image for movie</p>";
+        }
+	})
+}
+        res.send(page);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Error fetching latest movies');
+    }
+});
+
 app.get('/search', (req, res) => {
-	res.send('<nav> <a href="/home"> Home </a> <a href="/latest"> Latest Movies </a> <a href="/search"> Search </a> </nav> <form method="post"> <h1> Search For Movies </h1> <input name="movieSearch"> <button> Search </button> </form>')
+	res.send('<nav> <a href="/home"> Home </a> <a href="/top10"> Top 10 </a> <a href="/search"> Search </a> </nav> <form method="post"> <h1> Search For Movies </h1> <input name="movieSearch"> <button> Search </button> </form>')
 	
 })
 
@@ -301,6 +311,7 @@ app.post('/movie/:id', async (req, res) => {
 			await dbh.addReview(movie.original_title, `https://image.tmdb.org/t/p/w500${movie.poster_path}`, movie.overview, review, globalUser);
 				
 				res.send(`
+					<nav> <a href="/search"> Back to Search </a> </nav>
 					<h1> movie submitted </h1>
 					<p> Review submitted for ${movie.original_title}
 					<a href="/movie/${movie.id}"> Back to review </a>`)			
@@ -328,7 +339,7 @@ app.post('/search', async (req, res) => {
         const movies = data.results;
         
         if (movies && movies.length > 0) {
-            movies.slice(0, 12).forEach(movie => {
+            movies.slice(0, 20).forEach(movie => {
                 searchPage += `<h1> <a href="/movie/${movie.id}"> ${movie.original_title} </a></h1>`;
                 
                 if (movie.poster_path) {
