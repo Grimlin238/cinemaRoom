@@ -27,7 +27,7 @@ try {
 	
 	let myMovies = await dbh.getMovies(globalUser)
 	
-	let page = '<nav> <a href="/home"> Home </a> <a href="/top10"> Top 10 </a> <a href="/search"> Search </a> </nav> <h1> My Movies </h1>'
+	let page = '<nav style="background-color: purple; color: white;"> <a href="/home"> Home </a> <a href="/top10"> Top 10 </a> <a href="/search"> Search </a> </nav> <h1> My Movies </h1>'
 	
 	if (myMovies) {
 		
@@ -70,7 +70,7 @@ app.get('/movie/:id', async (req, res) => {
 			
 			const movie = data;
 			
-			let page = `<nav><a href="/home"> Home </a><a href="/top10"> Top 10 </a><a href="/search"> Search </a></nav>`;
+			let page = `<nav style="background-color: purple; color: white;"><a href="/home"> Home </a><a href="/top10"> Top 10 </a><a href="/search"> Search </a></nav>`;
 			
 			        page += `<h1>${movie.original_title}</h1>`;
 				
@@ -119,7 +119,7 @@ app.get('/mymovie/:id', async (req, res) => {
 		
 		let movie = await dbh.getReviewById(movieId, globalUser)
 		
-		let page = '<nav> <a href="/home"> Back to My Movies </a> </nav>'
+		let page = '<nav style="background-color: purple; color: white;"> <a href="/home"> Back to My Movies </a> </nav>'
 		
 		for (let i = 0; i < movie.length; i++) {
 			
@@ -207,7 +207,7 @@ alert('An issue occured, and your review was not updated.')
 })
 
 app.get('/top10', async (req, res) => {
-    let page = '<nav> <a href="/home"> Home </a> <a href="/top10"> Top 10 </a> <a href="/search"> Search </a> </nav> <h1> Top 10 Movies </h1>';
+    let page = '<nav style="background-color: purple; color: white;"> <a href="/home"> Home </a> <a href="/top10"> Top 10 </a> <a href="/search"> Search </a> </nav> <h1> Top 10 Movies </h1>';
     try {
         const response = await fetch("https://api.themoviedb.org/3/movie/top_rated?api_key=a26a1684ba14b7b49ebbd51f98eb95f7");
         const data = await response.json();
@@ -233,7 +233,7 @@ app.get('/top10', async (req, res) => {
 });
 
 app.get('/search', (req, res) => {
-	res.send('<nav> <a href="/home"> Home </a> <a href="/top10"> Top 10 </a> <a href="/search"> Search </a> </nav> <form method="post"> <h1> Search For Movies </h1> <input name="movieSearch"> <button> Search </button> </form>')
+	res.send('<nav style="background-color: purple: color: white;"> <a href="/home"> Home </a> <a href="/top10"> Top 10 </a> <a href="/search"> Search </a> </nav> <form method="post"> <h1> Search For Movies </h1> <input name="movieSearch"> <button> Search </button> </form>')
 	
 })
 
@@ -311,7 +311,7 @@ app.post('/movie/:id', async (req, res) => {
 			await dbh.addReview(movie.original_title, `https://image.tmdb.org/t/p/w500${movie.poster_path}`, movie.overview, review, globalUser);
 				
 				res.send(`
-					<nav> <a href="/search"> Back to Search </a> </nav>
+					<nav style="background-color: purple; color: white;"> <a href="/search"> Back to Search </a> </nav>
 					<h1> movie submitted </h1>
 					<p> Review submitted for ${movie.original_title}
 					<a href="/movie/${movie.id}"> Back to review </a>`)			
@@ -327,7 +327,7 @@ app.post('/movie/:id', async (req, res) => {
 })
 
 app.post('/search', async (req, res) => {
-    let searchPage = '<nav> <a href="/search"> Back To Search </a> </nav>  <h1> Search results </h1>';
+    let searchPage = '<nav style="background-color: purple: color: white;"> <a href="/search"> Back To Search </a> </nav>  <h1> Search results </h1>';
     
     try {
         const search = req.body.movieSearch;
@@ -350,7 +350,7 @@ app.post('/search', async (req, res) => {
             });
             res.send(searchPage);
         } else {
-            res.send('<nav> <a href="/search"> Back To Search </a> </nav> <p> We could not find that movie. </p>');
+            res.send('<nav style="background-color: purple; color: white;"> <a href="/search"> Back To Search </a> </nav> <p> We could not find that movie. </p>');
         }
     } catch (err) {
         console.error(err);
