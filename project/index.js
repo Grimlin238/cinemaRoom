@@ -13,12 +13,12 @@ var globalUser;
 
 app.get('/', (req, res) => {
 	
-	res.send('<h1> Cinema Room </h1> <p> The best movie reviewing platform </p> <a href="/create"> Click here to create an account </a> <p> Have an account? </p> <a href="/login"> Log in now! </a>');
+	res.send('<html> <body style="background-color: purple; color: white;"> <h1> Cinema Room </h1> <p> The best movie reviewing platform </p> <a href="/create"> Click here to create an account </a> <p> Have an account? </p> <a href="/login"> Log in now! </a> </body> </html>');
 })
 
 app.get('/create', (req, res) => {
 	
-	res.send('<form method="post"> <h1> Username? </h1> <input name="username"> <h1> Password? </h1> <input type="password" name="password"> <button> Create </button> </form>');
+	res.send('<html> <body style="background-color: purple; color: white;"><form method="post"> <h1> Username? </h1> <input name="username"> <h1> Password? </h1> <input type="password" name="password"> <button> Create </button> </form></body></html>');
 } )
 
 app.get('/home', async (req, res) => {
@@ -27,7 +27,7 @@ try {
 	
 	let myMovies = await dbh.getMovies(globalUser)
 	
-	let page = '<nav style="background-color: purple; color: white;"> <a href="/home"> Home </a> <a href="/top10"> Top 10 </a> <a href="/search"> Search </a> </nav> <h1> My Movies </h1>'
+	let page = '<html> <body style="background-color: black; color: white;"><nav style="background-color: purple; color: white;"> <a href="/home"> Home </a> <a href="/top10"> Top 10 </a> <a href="/search"> Search </a> </nav> <h1> My Movies </h1>'
 	
 	if (myMovies) {
 		
@@ -41,6 +41,9 @@ try {
 	
 	page += '<p> Your reviewed movies will appear here </p>'
 }
+
+page += '</body>'
+page += '</html>'
 	
 	res.send(page)
 	
@@ -55,7 +58,7 @@ try {
 
 app.get('/login', (req, res) => {
 	
-	res.send('<h1> Welcome back! </h1> <form method="post"> <h1> Username? </h1> <input name="username"> <h1> password? </h1> <input type="password" name="password"> <button> Log in </button> </form>');
+	res.send('<html> <body style="background-color: purple; color: white;"><h1> Welcome back! </h1> <form method="post"> <h1> Username? </h1> <input name="username"> <h1> password? </h1> <input type="password" name="password"> <button> Log in </button> </form></body></html>');
 });
 
 app.get('/movie/:id', async (req, res) => {
@@ -70,7 +73,7 @@ app.get('/movie/:id', async (req, res) => {
 			
 			const movie = data;
 			
-			let page = `<nav style="background-color: purple; color: white;"><a href="/home"> Home </a><a href="/top10"> Top 10 </a><a href="/search"> Search </a></nav>`;
+			let page = `<html> <body style="background-color: black; color: white;"><nav style="background-color: purple; color: white;"><a href="/home"> Home </a><a href="/top10"> Top 10 </a><a href="/search"> Search </a></nav>`;
 			
 			        page += `<h1>${movie.original_title}</h1>`;
 				
@@ -102,6 +105,8 @@ app.get('/movie/:id', async (req, res) => {
 					page += '<textarea name="review" placeholder="Leave a review"></textarea>'
 					page += "<button> Submit Review </button>";
 					page += '</form>'
+					page += '</body>'
+					page += '</html>'
 					res.send(page)
 					
 						} catch (err) {
@@ -119,7 +124,7 @@ app.get('/mymovie/:id', async (req, res) => {
 		
 		let movie = await dbh.getReviewById(movieId, globalUser)
 		
-		let page = '<nav style="background-color: purple; color: white;"> <a href="/home"> Back to My Movies </a> </nav>'
+		let page = '<html> <body style="background-color: black; color: white;"><nav style="background-color: purple; color: white;"> <a href="/home"> Back to My Movies </a> </nav>'
 		
 		for (let i = 0; i < movie.length; i++) {
 			
@@ -195,6 +200,10 @@ alert('An issue occured, and your review was not updated.')
 		
 		</script>`
 }
+
+page += '</body>'
+page += '</html>'
+
 		res.send(page)
 		
 	} catch (err) {
@@ -207,7 +216,7 @@ alert('An issue occured, and your review was not updated.')
 })
 
 app.get('/top10', async (req, res) => {
-    let page = '<nav style="background-color: purple; color: white;"> <a href="/home"> Home </a> <a href="/top10"> Top 10 </a> <a href="/search"> Search </a> </nav> <h1> Top 10 Movies </h1>';
+    let page = '<html> <body style="background-color: black; color: white;"><nav style="background-color: purple; color: white;"> <a href="/home"> Home </a> <a href="/top10"> Top 10 </a> <a href="/search"> Search </a> </nav> <h1> Top 10 Movies </h1>';
     try {
         const response = await fetch("https://api.themoviedb.org/3/movie/top_rated?api_key=a26a1684ba14b7b49ebbd51f98eb95f7");
         const data = await response.json();
@@ -225,6 +234,10 @@ app.get('/top10', async (req, res) => {
         }
 	})
 }
+
+page += '</body>'
+page += '</html>'
+
         res.send(page);
     } catch (error) {
         console.error(error);
@@ -233,7 +246,8 @@ app.get('/top10', async (req, res) => {
 });
 
 app.get('/search', (req, res) => {
-	res.send('<nav style="background-color: purple: color: white;"> <a href="/home"> Home </a> <a href="/top10"> Top 10 </a> <a href="/search"> Search </a> </nav> <form method="post"> <h1> Search For Movies </h1> <input name="movieSearch"> <button> Search </button> </form>')
+	
+	res.send('<html> <body style="background-color: black; color: white;"><nav style="background-color: purple: color: white;"> <a href="/home"> Home </a> <a href="/top10"> Top 10 </a> <a href="/search"> Search </a> </nav> <form method="post"> <h1> Search For Movies </h1> <input name="movieSearch"> <button> Search </button> </form></body></html>')
 	
 })
 
@@ -264,12 +278,12 @@ app.post('/create', async (req, res) => {
 	
 	if (isInThere) {
 		
-		res.send('<h1> Account created </h1> <p> We\'re sorry. That account already exists. Head to the log in page to sign in. </p> <a href="/login"> Go To Log In </a>');
+		res.send('<html> <body style="background-color: purple; color: white"><h1> Account created </h1> <p> We\'re sorry. That account already exists. Head to the log in page to sign in. </p> <a href="/login"> Go To Log In </a></body></html>');
 	} else {
 		
 		await dbh.addUser(username, password);
 		globalUser = username;		
-		res.send('<h1> Account Created! :-> </h1> <p> Thanks for becoming a member. Click get started below. Have fun! </p> <a href="/home"> Get Started! </a>')
+		res.send('<html><body style="background-color: purple; color: white;"><h1> Account Created! :-> </h1> <p> Thanks for becoming a member. Click get started below. Have fun! </p> <a href="/home"> Get Started! </a></body></html>')
 		
 	} 
 })
@@ -288,7 +302,7 @@ app.post('/login', async (req, res) => {
 		res.redirect('/home')
 	} else {
 		
-		res.send('<h1> Login Error! </h1> </p> Sorry, but your account isn\'t in our records. </p> <a href="/login"> Try Again </a>')
+		res.send(`<script> alert("Your account isn\'t in our records. Please try again."); window.location.href = "/login"; </script>`)
 	}
 })
 
@@ -311,13 +325,17 @@ app.post('/movie/:id', async (req, res) => {
 			await dbh.addReview(movie.original_title, `https://image.tmdb.org/t/p/w500${movie.poster_path}`, movie.overview, review, globalUser);
 				
 				res.send(`
+					<html>
+					<body style="background-color: black; color: white;">
 					<nav style="background-color: purple; color: white;"> <a href="/search"> Back to Search </a> </nav>
 					<h1> movie submitted </h1>
 					<p> Review submitted for ${movie.original_title}
-					<a href="/movie/${movie.id}"> Back to review </a>`)			
+					<a href="/movie/${movie.id}"> Back to review </a>
+					</body>
+					</html>`)			
 			} else {
 				
-				res.redirect(`/movie/${movie.id}`);
+				res.send(`<script> alert("Error! There is nothing to submit. Please type write a review before clicking submit or pressing enter."); window.location.href = "/movie/${movieId}"; </script>`);
 			}
 			} catch (err) {
 				
@@ -327,7 +345,7 @@ app.post('/movie/:id', async (req, res) => {
 })
 
 app.post('/search', async (req, res) => {
-    let searchPage = '<nav style="background-color: purple: color: white;"> <a href="/search"> Back To Search </a> </nav>  <h1> Search results </h1>';
+    let searchPage = '<html> <body style="background-color: black; color: white;"><nav style="background-color: purple: color: white;"> <a href="/search"> Back To Search </a> </nav>  <h1> Search results </h1>';
     
     try {
         const search = req.body.movieSearch;
@@ -348,9 +366,11 @@ app.post('/search', async (req, res) => {
                     searchPage += "<p>No image for movie</p>";
                 }
             });
+			searchPage += '</body>'
+			searchPage += '</html>'
             res.send(searchPage);
         } else {
-            res.send('<nav style="background-color: purple; color: white;"> <a href="/search"> Back To Search </a> </nav> <p> We could not find that movie. </p>');
+            res.send('<script> alert("Sorry! We couldn\'t find that movie."); window.location.href = "/search"; </script>');
         }
     } catch (err) {
         console.error(err);
