@@ -27,15 +27,16 @@ try {
 	
 	let myMovies = await dbh.getMovies(globalUser)
 	
+	myMovies.reverse()
+	
 	let page = '<html> <body style="background-color: black; color: white;"><nav style="background-color: purple; color: white;"> <a href="/home"> Home </a> <a href="/top10"> Top 10 </a> <a href="/search"> Search </a> </nav> <h1> My Movies </h1>'
 	
 	if (myMovies) {
 		
 	for (let i = 0; i < myMovies.length; i++) {
 		
-			page += `<h2> <a href="/mymovie/${myMovies[i]._id}"> ${myMovies[i].movieTitle} <a/> </h2>`
+			page += `<a href="/mymovie/${myMovies[i]._id}"> ${myMovies[i].movieTitle} <img src="${myMovies[i].movieImage}" alt="${myMovies[i].movieTitle}"> </a>`
 		
-		page += `<img src="${myMovies[i].movieImage}" alt="${myMovies[i].movieTitle}"`
 	}
 } else {
 	
@@ -225,12 +226,13 @@ app.get('/top10', async (req, res) => {
 		if (movies && movies.length >= 0) {
 			
 			movies.slice(0, 10).forEach(movie => {
-				
-        page += `<h1> <a href="/movie/${movie.id}">${movie.original_title} </a></h1>`;
-        if (movie.poster_path) {
-            page += `<img src="https://image.tmdb.org/t/p/w500${movie.poster_path}" alt="${movie.original_title}">`;
+				if (movie.poster_path) {
+        page += `<a href="/movie/${movie.id}"> ${movie.original_title} <img src="https://image.tmdb.org/t/p/w500${movie.poster_path}" alt="${movie.original_title}"> </a>`
+		
         } else {
-            page += "<p>No image for movie</p>";
+			
+            page += `<a href="${movieId}"> ${movie.original_title} - No Image available </a>`
+			
         }
 	})
 }
@@ -314,7 +316,7 @@ app.post('/movie/:id', async (req, res) => {
 	
 	try {
 		
-	const response = await fetch(`https://api.themoviedb.org/3/movie/${movieId}?api_key=a26a1684ba14b7b49ebbd51f98eb95f7`);
+	const response = await fetch(`https://api.themoviedb.org/3/movie/${movieId}?api_key=a26a1684ba14b7b49ebd51f98eb95f7`);
 		
 		const data = await response.json()
 		
@@ -358,12 +360,12 @@ app.post('/search', async (req, res) => {
         
         if (movies && movies.length > 0) {
             movies.slice(0, 20).forEach(movie => {
-                searchPage += `<h1> <a href="/movie/${movie.id}"> ${movie.original_title} </a></h1>`;
                 
                 if (movie.poster_path) {
-                    searchPage += `<img src="https://image.tmdb.org/t/p/w500${movie.poster_path}" alt="${movie.original_title}">`;
+					
+					searchPage += `<a href="/movie/${movie.id}"> ${movie.original_title} <img src="https://image.tmdb.org/t/p/w500${movie.poster_path}" alt="${movie.original_title}"> </a>`;
                 } else {
-                    searchPage += "<p>No image for movie</p>";
+					searchPage += `<a href="/movie/${movie.id}"> ${movie.original_title} - No image available </a>`
                 }
             });
 			searchPage += '</body>'
