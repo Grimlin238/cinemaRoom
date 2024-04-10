@@ -40,12 +40,15 @@ page += '<div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr 1fr; 
 			page += `<div> <a href="/mymovie/${myMovies[i]._id}"> ${myMovies[i].movieTitle} <img src="${myMovies[i].movieImage}" alt="${myMovies[i].movieTitle}"> </a></div>`
 		
 	}
+	
+	page+= '</div>'
+	
 } else {
 	
 	page += '<p> Your reviewed movies will appear here </p>'
+	
 }
 
-page+= '</div>'
 page += '</body>'
 page += '</html>'
 	
@@ -95,6 +98,8 @@ app.get('/movie/:id', async (req, res) => {
 					page += `<form method="post">`
 					
 					let reviews = await dbh.getReviews(movie.original_title)
+					
+					reviews.reverse()
 					
 					page += '<h1> Reviews Given </h1>';
 					
