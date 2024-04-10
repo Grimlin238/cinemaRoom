@@ -30,12 +30,14 @@ try {
 	myMovies.reverse()
 	
 	let page = '<html> <body style="background-color: black; color: white;"><nav style="background-color: purple; color: white;"> <a href="/home"> Home </a> <a href="/top10"> Top 10 </a> <a href="/search"> Search </a> </nav> <h1> My Movies </h1>'
+
+page += '<div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr 1fr; gird-gap: 10px;">'
 	
 	if (myMovies) {
 		
 	for (let i = 0; i < myMovies.length; i++) {
 		
-			page += `<a href="/mymovie/${myMovies[i]._id}"> ${myMovies[i].movieTitle} <img src="${myMovies[i].movieImage}" alt="${myMovies[i].movieTitle}"> </a>`
+			page += `<div> <a href="/mymovie/${myMovies[i]._id}"> ${myMovies[i].movieTitle} <img src="${myMovies[i].movieImage}" alt="${myMovies[i].movieTitle}"> </a></div>`
 		
 	}
 } else {
@@ -43,6 +45,7 @@ try {
 	page += '<p> Your reviewed movies will appear here </p>'
 }
 
+page+= '</div>'
 page += '</body>'
 page += '</html>'
 	
@@ -222,21 +225,24 @@ app.get('/top10', async (req, res) => {
         const response = await fetch("https://api.themoviedb.org/3/movie/top_rated?api_key=a26a1684ba14b7b49ebbd51f98eb95f7");
         const data = await response.json();
         const movies = data.results;
+
+		page += '<div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; grid-gap: 10px">'
 		
 		if (movies && movies.length >= 0) {
 			
 			movies.slice(0, 10).forEach(movie => {
 				if (movie.poster_path) {
-        page += `<a href="/movie/${movie.id}"> ${movie.original_title} <img src="https://image.tmdb.org/t/p/w500${movie.poster_path}" alt="${movie.original_title}"> </a>`
+        page += `<div> <a href="/movie/${movie.id}"> ${movie.original_title} <img src="https://image.tmdb.org/t/p/w500${movie.poster_path}" alt="${movie.original_title}"> </a> </div>`
 		
         } else {
 			
-            page += `<a href="${movieId}"> ${movie.original_title} - No Image available </a>`
+            page += `<div> <a href="${movieId}"> ${movie.original_title} - No Image available </a> </div>`
 			
         }
 	})
 }
 
+page += '</div>'
 page += '</body>'
 page += '</html>'
 
@@ -359,13 +365,16 @@ app.post('/search', async (req, res) => {
         const movies = data.results;
         
         if (movies && movies.length > 0) {
+			
+			searchPage += '<div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; grid-gap: 10px;">'
+			
             movies.slice(0, 20).forEach(movie => {
-                
+				
                 if (movie.poster_path) {
 					
-					searchPage += `<a href="/movie/${movie.id}"> ${movie.original_title} <img src="https://image.tmdb.org/t/p/w500${movie.poster_path}" alt="${movie.original_title}"> </a>`;
+					searchPage += `<div> <a href="/movie/${movie.id}"> ${movie.original_title} <img src="https://image.tmdb.org/t/p/w500${movie.poster_path}" alt="${movie.original_title}"> </a> </div>`;
                 } else {
-					searchPage += `<a href="/movie/${movie.id}"> ${movie.original_title} - No image available </a>`
+					searchPage += `<div> <a href="/movie/${movie.id}"> ${movie.original_title} - No image available </a> </div>`
                 }
             });
 			searchPage += '</body>'
