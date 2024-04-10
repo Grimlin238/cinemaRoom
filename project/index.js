@@ -322,29 +322,35 @@ app.post('/movie/:id', async (req, res) => {
 	
 	try {
 		
-	const response = await fetch(`https://api.themoviedb.org/3/movie/${movieId}?api_key=a26a1684ba14b7b49ebd51f98eb95f7`);
+	 const response = await fetch(`https://api.themoviedb.org/3/movie/${movieId}?api_key=a26a1684ba14b7b49ebbd51f98eb95f7`);
 		
 		const data = await response.json()
 		
 		const movie = data;
 		
+		const exists = await dbh.isReviewExists(movie.original_title, globalUser)
+		
+		if (exists != true) {
+			
 		if (review && review.length > 0) {
 			
 			await dbh.addReview(movie.original_title, `https://image.tmdb.org/t/p/w500${movie.poster_path}`, movie.overview, review, globalUser);
 				
-				res.send(`
-					<html>
-					<body style="background-color: black; color: white;">
-					<nav style="background-color: purple; color: white;"> <a href="/search"> Back to Search </a> </nav>
-					<h1> movie submitted </h1>
-					<p> Review submitted for ${movie.original_title}
-					<a href="/movie/${movie.id}"> Back to review </a>
-					</body>
-					</html>`)			
+				res.send(`<script>
+					
+alert("Review submitted for ${movie.original_title}");
+window.location.href = "/movie/${movieId}";
+
+</script>`)
 			} else {
 				
-				res.send(`<script> alert("Error! There is nothing to submit. Please type write a review before clicking submit or pressing enter."); window.location.href = "/movie/${movieId}"; </script>`);
+				res.send(`<script> alert("Error! There is nothing to submit. Please type write a review before clicking submit."); window.location.href = "/movie/${movieId}"; </script>`);
 			}
+		} else {
+			
+			res.send(`<script> alert("YOu\'ve already reviewed this movie."); window.location.href = "/movie/${movieId}"; </script>`)
+			
+		}
 			} catch (err) {
 				
 				console.error(err);

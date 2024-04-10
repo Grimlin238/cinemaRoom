@@ -139,6 +139,39 @@ console.error(err)
 			throw err;
 		}
 	}
+	
+	static async isReviewExists(title, user) {
+		
+		try {
+			
+			const base = await db.get('CinemaRoom')
+			
+			const collection = await db.getCollection('reviewdata')
+			
+			const doc = await collection.find({
+				
+				movieTitle: title,
+				movieReviewBy: user
+				
+			}).toArray()
+			
+			if (doc.length > 0) {
+				
+				return true
+				
+			} else {
+				return false
+				
+			}
+			
+		} catch (err) {
+			
+			console.error(err)
+			throw err
+			
+		}
+		
+	}
 
 	static async isUserExists(user, pass) {
 		
