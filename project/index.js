@@ -9,7 +9,7 @@ app.use(express.urlencoded({
 
 app.use(express.json())
 
-var globalUser;
+var globalUser = "";
 
 app.get('/', (req, res) => {
 	
@@ -17,9 +17,15 @@ app.get('/', (req, res) => {
 })
 
 app.get('/create', (req, res) => {
+	if (globalUser != "") {
+		
+		globalUser = ""
+		
+	}
 	
-	res.send('<html> <body style="background-color: purple; color: white;"><form method="post"> <h1> Username? </h1> <input name="username"> <h1> Password? </h1> <input type="password" name="password"> <button> Create </button> </form></body></html>');
-} )
+	res.send('<html> <body style="background-color: purple; color: white;"><form method="post"> <h1> We\'re gladd you could join us. Create an account below. </h1> <h1> Username? </h1> <input name="username"> <h1> Password? </h1> <input type="password" name="password"> <p> Have an account? <a href="/login"> Log in here. </a> </p> <button> Create Account </button> </form></body></html>');
+	
+})
 
 app.get('/home', async (req, res) => {
 	
@@ -29,7 +35,7 @@ try {
 	
 	myMovies.reverse()
 	
-	let page = '<html> <body style="background-color: black; color: white;"><nav style="background-color: purple; color: white;"> <a href="/home"> Home </a> <a href="/top10"> Top 10 </a> <a href="/search"> Search </a> </nav> <h1> My Movies </h1>'
+	let page = '<html> <body style="background-color: black; color: white;"><nav style="background-color: purple; color: white;"> <a href="/home"> Home </a> <a href="/top10"> Top 10 </a> <a href="/search"> Search </a> <a href="/login"> Log Out </a> </nav> <h1> My Movies </h1>'
 
 page += '<div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr 1fr; gird-gap: 10px;">'
 	
@@ -65,7 +71,14 @@ page += '</html>'
 
 app.get('/login', (req, res) => {
 	
-	res.send('<html> <body style="background-color: purple; color: white;"><h1> Welcome back! </h1> <form method="post"> <h1> Username? </h1> <input name="username"> <h1> password? </h1> <input type="password" name="password"> <button> Log in </button> </form></body></html>');
+	if (globalUser != "") {
+		
+		globalUser = ""
+			
+	}
+	
+	res.send('<html> <body style="background-color: purple; color: white;"><h1> Welcome back! </h1> <form method="post"> <h1> Username? </h1> <input name="username"> <h1> password? </h1> <input type="password" name="password"> <p> Don\'t have an account? <a href="/create"> Create an account here. </a> </p> <button> Log In </button> </form></body></html>');
+	
 });
 
 app.get('/movie/:id', async (req, res) => {
@@ -80,7 +93,7 @@ app.get('/movie/:id', async (req, res) => {
 			
 			const movie = data;
 			
-			let page = `<html> <body style="background-color: black; color: white;"><nav style="background-color: purple; color: white;"><a href="/home"> Home </a><a href="/top10"> Top 10 </a><a href="/search"> Search </a></nav>`;
+			let page = `<html> <body style="background-color: black; color: white;"><nav style="background-color: purple; color: white;"><a href="/home"> Home </a><a href="/top10"> Top 10 </a><a href="/search"> Search </a> <a href="/login"> Log Out </a> </nav>`;
 			
 			        page += `<h1>${movie.original_title}</h1>`;
 				
@@ -133,7 +146,7 @@ app.get('/mymovie/:id', async (req, res) => {
 		
 		let movie = await dbh.getReviewById(movieId, globalUser)
 		
-		let page = '<html> <body style="background-color: black; color: white;"><nav style="background-color: purple; color: white;"> <a href="/home"> Back to My Movies </a> </nav>'
+		let page = '<html> <body style="background-color: black; color: white;"><nav style="background-color: purple; color: white;"> <a href="/home"> Back to My Movies </a> <a href="/login"> Log Out </a> </nav>'
 		
 		for (let i = 0; i < movie.length; i++) {
 			
@@ -225,7 +238,7 @@ page += '</html>'
 })
 
 app.get('/top10', async (req, res) => {
-    let page = '<html> <body style="background-color: black; color: white;"><nav style="background-color: purple; color: white;"> <a href="/home"> Home </a> <a href="/top10"> Top 10 </a> <a href="/search"> Search </a> </nav> <h1> Top 10 Movies </h1>';
+    let page = '<html> <body style="background-color: black; color: white;"><nav style="background-color: purple; color: white;"> <a href="/home"> Home </a> <a href="/top10"> Top 10 </a> <a href="/search"> Search </a> <a href="/login"> Log Out </a> </nav> <h1> Top 10 Movies </h1>';
     try {
         const response = await fetch("https://api.themoviedb.org/3/movie/top_rated?api_key=a26a1684ba14b7b49ebbd51f98eb95f7");
         const data = await response.json();
@@ -260,7 +273,7 @@ page += '</html>'
 
 app.get('/search', (req, res) => {
 	
-	res.send('<html> <body style="background-color: black; color: white;"><nav style="background-color: purple: color: white;"> <a href="/home"> Home </a> <a href="/top10"> Top 10 </a> <a href="/search"> Search </a> </nav> <form method="post"> <h1> Search For Movies </h1> <input name="movieSearch"> <button> Search </button> </form></body></html>')
+	res.send('<html> <body style="background-color: black; color: white;"><nav style="background-color: purple: color: white;"> <a href="/home"> Home </a> <a href="/top10"> Top 10 </a> <a href="/search"> Search </a> <a href="/login"> Log Out </a> </nav> <form method="post"> <h1> Search For Movies </h1> <input name="movieSearch"> <button> Search </button> </form></body></html>')
 	
 })
 
@@ -284,9 +297,10 @@ app.delete('/mymovie/:id', async (req, res) => {
 
 app.post('/create', async (req, res) => {
 	
-	const username = req.body.username;
+	const username = req.body.username.trim();
 	
-	const password = req.body.password;
+	const password = req.body.password.trim();
+	
 	const isInThere = await dbh.isUserExists(username, password)
 	
 	if (isInThere) {
@@ -303,9 +317,9 @@ app.post('/create', async (req, res) => {
 
 app.post('/login', async (req, res) => {
 	
-	const username = req.body.username;
+	const username = req.body.username.trim();
 	
-	const password = req.body.password;
+	const password = req.body.password.trim();
 	
 	const isInThere = await dbh.isUserExists(username, password);
 	
@@ -364,7 +378,7 @@ window.location.href = "/movie/${movieId}";
 })
 
 app.post('/search', async (req, res) => {
-    let searchPage = '<html> <body style="background-color: black; color: white;"><nav style="background-color: purple: color: white;"> <a href="/search"> Back To Search </a> </nav>  <h1> Search results </h1>';
+    let searchPage = '<html> <body style="background-color: black; color: white;"><nav style="background-color: purple: color: white;"> <a href="/search"> Back To Search </a> <a href="/login"> Log Out </a> </nav> <h1> Search results </h1>';
     
     try {
         const search = req.body.movieSearch;
