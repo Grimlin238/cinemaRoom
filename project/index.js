@@ -114,15 +114,20 @@ app.get('/movie/:id', async (req, res) => {
 					let reviews = await dbh.getReviews(movie.original_title)
 					
 					reviews.reverse()
-					
+				
 					page += '<h1> Reviews Given </h1>';
 					
 					for (let i = 0; i < reviews.length; i++) {
 						
-						page += `<p> ${reviews[i].movieReview}`
-						page += '<br>'
-						page += ` - review by @${reviews[i].movieReviewBy} </p>`
-						
+						if (reviews[i].movieReviewBy === globalUser) {
+							
+							page += `<p> <a href="/myMovie/${reviews[i]._id}"> ${reviews[i].movieReview} - reviewed by @${reviews[i].movieReviewBy} </a> </p>`
+							
+						} else {
+							
+							page += `<p> ${reviews[i].movieReview} - reviewed by @${reviews[i].movieReviewBy} </p>`
+							
+						}
 					}
 					
 					page += '<textarea name="review" placeholder="Leave a review"></textarea>'
