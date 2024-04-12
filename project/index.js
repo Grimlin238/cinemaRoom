@@ -123,9 +123,13 @@ app.get('/movie/:id', async (req, res) => {
 							
 							page += `<p> <a href="/myMovie/${reviews[i]._id}"> ${reviews[i].movieReview} - reviewed by @${reviews[i].movieReviewBy} </a> </p>`
 							
+							page += '<br>'
+							
 						} else {
 							
 							page += `<p> ${reviews[i].movieReview} - reviewed by @${reviews[i].movieReviewBy} </p>`
+							
+							page += '<br>'
 							
 						}
 					}
