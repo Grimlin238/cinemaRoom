@@ -311,6 +311,12 @@ app.post('/create', async (req, res) => {
 	
 	const password = req.body.password.trim();
 	
+	if (username.trim() == "" || password.trim() == "") {
+		
+		res.send('<script> alert("Error! Please ensure all fields are filled out"); window.location.href = "/create"; </script>')
+		
+	} else {
+	
 	const isInThere = await dbh.isUserExists(username, password)
 	
 	if (isInThere) {
@@ -322,6 +328,7 @@ app.post('/create', async (req, res) => {
 		globalUser = username;		
 		res.send('<html><body style="background-color: purple; color: white;"><h1> Account Created! :-> </h1> <p> Thanks for becoming a member. Click get started below. Have fun! </p> <a href="/home"> Get Started! </a></body></html>')
 		
+	}
 	} 
 })
 
@@ -330,6 +337,11 @@ app.post('/login', async (req, res) => {
 	const username = req.body.username.trim();
 	
 	const password = req.body.password.trim();
+	if (username.trim() == "" || password.trim() == "") {
+		
+		res.send('<script> alert("Error! Please ensure all fields are filled out."); window.location.href = "/login"; </script>')
+		
+	} else {
 	
 	const isInThere = await dbh.isUserExists(username, password);
 	
@@ -341,6 +353,7 @@ app.post('/login', async (req, res) => {
 		
 		res.send(`<script> alert("Your account isn\'t in our records. Please try again."); window.location.href = "/login"; </script>`)
 	}
+}
 })
 
 app.post('/movie/:id', async (req, res) => {
@@ -398,7 +411,12 @@ app.post('/search', async (req, res) => {
         const data = await response.json();
         
         const movies = data.results;
-        
+        if (search.trim() == "") {
+        	
+			res.send('<script> alert("Error! Please enter a movie to be searched."); window.location.href = "/search"; </script>')
+			
+        } else {
+		
         if (movies && movies.length > 0) {
 			
 			searchPage += '<div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; grid-gap: 10px;">'
@@ -418,6 +436,7 @@ app.post('/search', async (req, res) => {
         } else {
             res.send('<script> alert("Sorry! We couldn\'t find that movie."); window.location.href = "/search"; </script>');
         }
+	}
     } catch (err) {
         console.error(err);
         res.status(500).send('Error fetching search results');
@@ -432,10 +451,17 @@ app.put('/mymovie/:id', async (req, res) => {
 		
 		const review = req.body.review
 		
+		if (review.trim() == "") {
+			
+			res.send(`<script> window.location.href = "/mymovie/${movieId}"; </script>`)
+			
+		} else {
+		
 		await dbh.updateReview(movieId, globalUser, review)
-		
-		res.redirect('/mymovie/:id')
-		
+	
+		res.redirect(`/mymovie/${movieId}`)
+	
+	}	
 	} catch (err) {
 		
 		console.error(err)
