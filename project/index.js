@@ -14,6 +14,7 @@ var globalUser = "";
 app.get('/', (req, res) => {
 	
 	res.send('<html> <body style="background-color: purple; color: white;"> <h1> Cinema Room </h1> <p> The best movie reviewing platform </p> <a href="/create"> Click here to create an account </a> <p> Have an account? </p> <a href="/login"> Log in now! </a> </body> </html>');
+	
 })
 
 app.get('/create', (req, res) => {
@@ -36,10 +37,14 @@ try {
 	myMovies.reverse()
 	
 	let page = '<html> <body style="background-color: black; color: white;"><nav style="background-color: purple; color: white;"> <a href="/home"> Home </a> <a href="/top10"> Top 10 </a> <a href="/search"> Search </a> <a href="/login"> Log Out </a> </nav> <h1> My Movies </h1>'
-
-page += '<div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr 1fr; gird-gap: 10px;">'
 	
-	if (myMovies) {
+	if (myMovies.length === 0) {
+		
+		page += '<p> Your reviewed movies will appear here. </p>'
+		
+	} else  {
+		
+		page += '<div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr 1fr; gird-gap: 10px;">'
 		
 	for (let i = 0; i < myMovies.length; i++) {
 		
@@ -48,10 +53,6 @@ page += '<div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr 1fr; 
 	}
 	
 	page+= '</div>'
-	
-} else {
-	
-	page += '<p> Your reviewed movies will appear here </p>'
 	
 }
 
