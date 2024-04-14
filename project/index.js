@@ -16,8 +16,8 @@ app.get('/', (req, res) => {
 	res.send(`<html>
 	 <body style="height: 100%; margin: 0; display: flex; justify-content: center; align-items: center; background-color: purple; color: white;">
 	<div style="text-align: center;">
-	<h1> Cinema Room </h1>
-	<p> The best movie reviewing platform.
+	<h1 style="font-family: \'Montserrat\', sans-serif;"> Cinema Room </h1>
+	<p style="font-family: \'Open Sans\', sans-serif; font-family: 20px;"> The best movie reviewing platform.
 	<a href="/create"> Click here to create an account </a>
 	Have an account?
 	<a href="/login"> Log in now! </a>
@@ -39,15 +39,15 @@ app.get('/create', (req, res) => {
 	<body style="height: 100%; margin: 0; display: flex; justify-content: center; align-items: center; background-color: purple; color: white;">
 	<div style="text-align: center;">
 	<form method="post">
-	<h1> We\'re gladd you could join us. Create an account below. </h1>
-	<h1> Username? </h1>
+	<h1 style="font-family: \'Montserrat\', sans-serif;"> We\'re gladd you could join us. Create an account below. </h1>
+	<h1 style="\'MOntserrat\', sans-serif;"> Username? </h1>
 	<input name="username">
-	<h1> Password? </h1>
+	<h1 style="\'Montserrat\', sans-serif;"> Password? </h1>
 	<input type="password" name="password">
-	<p> Have an account?
+	<p style="\'Open Sans\', sans-serif; font-family: 20px;"> Have an account?
 	<a href="/login"> Log in here. </a>
 	</p>
-	<button> Create Account </button>
+	<button style="background-color: white; color: purple; font-family: \'Raleway\', sans-serif;"> Create Account </button>
 	</form>
 	</div>
 	</body>
@@ -63,12 +63,15 @@ try {
 	
 	myMovies.reverse()
 	
-	let page = '<html> <body style="background-color: black; color: white;"><nav style="background-color: purple; color: white;"> <a href="/home"> Home </a> <a href="/top10"> Top 10 </a> <a href="/search"> Search </a> <a href="/login"> Log Out </a> </nav> <h1> My Movies </h1>'
+	let page = `<html>
+	<body style="background-color: black; color: white;">
+	<nav style="background-color: purple; color: white; font-family: \'Raleway\', sans-serif;"> <a href="/home"> Home </a> <a href="/top10"> Top 10 </a> <a href="/search"> Search </a> <a href="/login"> Log Out </a> </nav>
+	<h1 style="font-family: \'Montserrat\', sans-serif;"> My Movies </h1>`
 	
 	if (myMovies.length === 0) {
 		
 		page += '<div style="display: flex; justify-content: center; text-align: center;">'
-		page += '<p> Your reviewed movies will appear here. </p>'
+		page += '<p style="font-family: \'Open Sans\', sans-serif;"> Your reviewed movies will appear here. </p>'
 		page += '</div>'
 		
 	} else  {
@@ -77,7 +80,7 @@ try {
 		
 	for (let i = 0; i < myMovies.length; i++) {
 		
-			page += `<div> <a href="/mymovie/${myMovies[i]._id}"> ${myMovies[i].movieTitle} <img src="${myMovies[i].movieImage}" alt="${myMovies[i].movieTitle}"> </a></div>`
+			page += `<div> <a style="font-family: \'Raleway\', sans-serif;" href="/mymovie/${myMovies[i]._id}"> ${myMovies[i].movieTitle} <img src="${myMovies[i].movieImage}" alt="${myMovies[i].movieTitle}"> </a></div>`
 		
 	}
 	
@@ -110,16 +113,16 @@ app.get('/login', (req, res) => {
 	res.send(`<html>
 	<body style="height: 100%; margin: 0; display: flex; justify-content: center; align-items: center; background-color: purple; color: white;">
 	<div style="text-align: center;">
-	<h1> Welcome back! </h1>
+	<h1 style="font-family: \'Montserrat\', sans-serif;"> Welcome back! </h1>
 	<form method="post">
-	<h1> Username? </h1>
+	<h1 style="font-family: \'Montserrat\', sans-serif;"> Username? </h1>
 	<input name="username">
-	<h1> password? </h1>
+	<h1 style="font-family: \'Montserrat\', sans-serif;"> password? </h1>
 	<input type="password" name="password">
-	<p> Don\'t have an account?
+	<p style="\'Open Sans\', sans-serif; font-family: 20px;"> Don\'t have an account?
 	<a href="/create"> Create an account here. </a>
 	</p>
-	<button> Log In </button>
+	<button style="background-color: white; color: purple; font-family: \'Raleway\', sans-serif;"> Log In </button>
 	</form>
 	</div>
 	</body>
@@ -141,13 +144,12 @@ app.get('/movie/:id', async (req, res) => {
 			
 			let page = `<html>
 			<body style="background-color: black; color: white;">
-			<nav style="background-color: purple; color: white;"><a href="/home"> Home </a><a href="/top10"> Top 10 </a><a href="/search"> Search </a> <a href="/login"> Log Out </a> </nav>`;
+			<nav style="background-color: purple; color: white; font-family: \'Raleway\', sans-serif;"><a href="/home"> Home </a><a href="/top10"> Top 10 </a><a href="/search"> Search </a> <a href="/login"> Log Out </a> </nav>`;
 			
 			page += '<div style="position: absolute; left: 0;">'
 
 page += '<div>'
-			
-			        page += `<h1>${movie.original_title}</h1>`;
+			page += `<h1 style="font-family; \'Montserrat\', sans-serif;">${movie.original_title}</h1>`;
 				
 					if (movie.poster_path) {
 						
@@ -155,10 +157,10 @@ page += '<div>'
 									 
 					} else {
 						
-						page += "<p> No image available </p>";
+						page += `<p style="font-family: \'Open Sans\', sans-serif;"> No image available </p>`;
 						
 					}
-					page += `<p>${movie.overview}</p>`;
+					page += `<p style="font-family: \'Open Sans\', sans-serif;">${movie.overview}</p>`;
 					
 					page += '</div>'
 			page += '</div>'
@@ -171,10 +173,10 @@ page += '<div>'
 					
 					reviews.reverse()
 				
-					page += '<h1> Reviews Given </h1>';
+					page += '<h1 style="font-family: \'Montserrat\', sans-serif;"> Reviews Given </h1>';
 					if (reviews.length === 0) {
 						
-						page += '<p> No reviews yet. Wanna be the first? </p>'
+						page += '<p style="font-family: \'Open Sans\', sans-serif;"> No reviews yet. Wanna be the first? </p>'
 						
 					} else {
 						
@@ -182,13 +184,13 @@ page += '<div>'
 						
 						if (reviews[i].movieReviewBy === globalUser) {
 							
-							page += `<p> <a href="/myMovie/${reviews[i]._id}"> ${reviews[i].movieReview} - reviewed by @${reviews[i].movieReviewBy} </a> </p>`
+							page += `<p style="font-family: \'Open Sans\', sans-serif;"> <a href="/myMovie/${reviews[i]._id}"> ${reviews[i].movieReview} - reviewed by @${reviews[i].movieReviewBy} </a> </p>`
 							
 							page += '<br>'
 							
 						} else {
 							
-							page += `<p> ${reviews[i].movieReview} - reviewed by @${reviews[i].movieReviewBy} </p>`
+							page += `<p style="font-family: \'Open Sans\', sans-serif;"> ${reviews[i].movieReview} - reviewed by @${reviews[i].movieReviewBy} </p>`
 							
 							page += '<br>'
 							
@@ -199,10 +201,11 @@ page += '<div>'
 					page += '<div style="position: fixed; bottom: 0; right: 0;">'
 					page += '<div>'
 					page += `<form method="post">`
-					
+				
 					page += '<textarea name="review" placeholder="Leave a review"></textarea>'
-					page += "<button> Submit Review </button>";
+					page += '<button style="background-color: purple; color: white; font-family: \'Raleway\', sans-serif;"> Submit Review </button>';
 					page += '</form>'
+					page += '</div>'
 					page += '</div>'
 					page += '</div>'
 					
@@ -227,18 +230,18 @@ app.get('/mymovie/:id', async (req, res) => {
 		
 		let page = `<html>
 		<body style="background-color: black; color: white;">
-		<nav style="background-color: purple; color: white;"> <a href="/home"> Back to My Movies </a> <a href="/login"> Log Out </a> </nav>`
+		<nav style="background-color: purple; color: white; font-family: \'Raleway\', sans-serif;"> <a href="/home"> Back to My Movies </a> <a href="/login"> Log Out </a> </nav>`
 		
 		page += '<div style="position: absolute; left: 0;">'
 		page += '<div>'
 		
 		for (let i = 0; i < movie.length; i++) {
 			
-			page += `<h1> ${movie[i].movieTitle} </h1>`
+			page += `<h1 style="font-family: \'Montserrat\', sans-serif;"> ${movie[i].movieTitle} </h1>`
 			
 			page += `<img src="${movie[i].movieImage} alt="${movie[i].movieTitle}">`
 			
-			page += `<p> ${movie[i].movieDescription} </p>`
+			page += `<p style="font-family: \'Open Sans\', sans-serif;"> ${movie[i].movieDescription} </p>`
 		
 		page += '<br>'
 			
@@ -249,19 +252,19 @@ app.get('/mymovie/:id', async (req, res) => {
 			
 			page += '<div>'
 			
-			page += '<h2> Your review </h2>'
+			page += `<h2 style="font-family: \'Montserrat\', sans-serif;"> Your review </h2>`
 			
-			page += `<p> ${movie[i].movieReview} </p>`
+			page += `<p style="font-family: \'Open Sans\', sans-serif;"> ${movie[i].movieReview} </p>`
 			page += '<br>'
 			
 			page += '<div style="position: fixed; bottom: 0; right: 0;">'
 			
 			page += '<div>'
 			
-		page += '<button style="margin-right: 10px;" onclick="deleteReview()"> Delete Review </button>'
+		page += `<button style="background-color: purple; color: white; font-family: \'Raleway\', sans-serif; margin-right: 10px;" onclick="deleteReview()"> Delete Review </button>`
 		
-		page += '<button onclick="editReview()"> Edit Review </button>'
-			
+		page += '<button style="background-color: purple; color: white; font-family: \'Raleway\', sans-serif;" onclick="editReview()"> Edit Review </button>'
+			page += '</div>'
 			page += '</div>'
 			page += '</div>'
 			
@@ -342,12 +345,12 @@ app.get('/search', (req, res) => {
 	
 	res.send(`<html>
 	<body style="background-color: black; color: white;">
-	<nav style="background-color: purple: color: white;"> <a href="/home"> Home </a> <a href="/top10"> Top 10 </a> <a href="/search"> Search </a> <a href="/login"> Log Out </a> </nav>
+	<nav style="background-color: purple: color: white; font-family: \'Raleway\', sans-serif;"> <a href="/home"> Home </a> <a href="/top10"> Top 10 </a> <a href="/search"> Search </a> <a href="/login"> Log Out </a> </nav>
 	<div style="height: 100%; margin: 0; display: flex; justify-content: center; align-items: center; text-align: center;">
 	<form method="post">
-	<h1> Search For Movies </h1>
+	<h1> Search For Movies </h1 style="font-family: \'Montserrat\', sans-serif;">
 	<input name="movieSearch">
-	<button> Search </button>
+	<button style="background-color: purple; color: white; font-family: \'Raleway\', sans-serrif;"> Search </button>
 	</form>
 	</div>
 	</body>
@@ -356,7 +359,11 @@ app.get('/search', (req, res) => {
 })
 
 app.get('/top10', async (req, res) => {
-    let page = '<html> <body style="background-color: black; color: white;"><nav style="background-color: purple; color: white;"> <a href="/home"> Home </a> <a href="/top10"> Top 10 </a> <a href="/search"> Search </a> <a href="/login"> Log Out </a> </nav> <h1> Top 10 Movies </h1>';
+	
+    let page = `<html>
+	<body style="background-color: black; color: white;">
+	<nav style="background-color: purple; color: white; font-family: \'Raleway\', sans-serif;"> <a href="/home"> Home </a> <a href="/top10"> Top 10 </a> <a href="/search"> Search </a> <a href="/login"> Log Out </a> </nav>
+	<h1 style="font-family: \'Montserrat\', sans-serif;"> Top 10 Movies </h1>`;
     try {
         const response = await fetch("https://api.themoviedb.org/3/movie/top_rated?api_key=a26a1684ba14b7b49ebbd51f98eb95f7");
         const data = await response.json();
@@ -368,11 +375,11 @@ app.get('/top10', async (req, res) => {
 			
 			movies.slice(0, 10).forEach(movie => {
 				if (movie.poster_path) {
-        page += `<div> <a href="/movie/${movie.id}"> ${movie.original_title} <img src="https://image.tmdb.org/t/p/w500${movie.poster_path}" alt="${movie.original_title}"> </a> </div>`
+        page += `<div> <a style="font-family: \'Raleway\', sans-serif;" href="/movie/${movie.id}"> ${movie.original_title} <img src="https://image.tmdb.org/t/p/w500${movie.poster_path}" alt="${movie.original_title}"> </a> </div>`
 		
         } else {
 			
-            page += `<div> <a href="${movieId}"> ${movie.original_title} - No Image available </a> </div>`
+            page += `<div> <a style="font-family: \'Raleway\', sans-serif;" href="${movieId}"> ${movie.original_title} - No Image available </a> </div>`
 			
         }
 	})
@@ -426,9 +433,9 @@ app.post('/create', async (req, res) => {
 		res.send(`<html>
 		<body style="height: 100%; margin: 0; display: flex; justify-content: center; align-items: center; background-color: purple; color: white">
 		<div style="text-align: center;">
-		<h1> Account created </h1>
-		<p> We\'re sorry. That account already exists. Head to the log in page to sign in. </p>
-		<a href="/login"> Go To Log In </a>
+		<h1 style="font-family: \'Montserrat\', sans-serrif;"> Account created </h1>
+		<p style="font-family: \'Open Sans\', sans-serif; font-size: 20px;"> We\'re sorry. That account already exists. Head to the log in page to sign in. </p>
+		<a style="font-family: \'Raleway\', sans-serif;" href="/login"> Go To Log In </a>
 		</div>
 		</body>
 		</html>`);
@@ -440,9 +447,9 @@ app.post('/create', async (req, res) => {
 		res.send(`<html>
 		<body style="height: 100%; margin: 0; display: flex; justify-content: center; align-items: center; background-color: purple; color: white;">
 		<div style="text-align: center;">
-		<h1> Account Created! :-> </h1>
-		<p> Thanks for becoming a member. Click get started below. Have fun! </p>
-		<a href="/home"> Get Started! </a>
+		<h1 style="font-family: \'Monserrat\', sans-serif;"> Account Created! :-> </h1>
+		<p style="font-family: \'Montserrat\', sans-serif; font-size: 20px;"> Thanks for becoming a member. Click get started below. Have fun! </p>
+		<a style="font-family: \'Raleway\', sans-serif;" href="/home"> Get Started! </a>
 		</div>
 		</body>
 		</html>`)
@@ -520,7 +527,10 @@ window.location.href = "/movie/${movieId}";
 })
 
 app.post('/search', async (req, res) => {
-    let searchPage = '<html> <body style="background-color: black; color: white;"><nav style="background-color: purple: color: white;"> <a href="/search"> Back To Search </a> <a href="/login"> Log Out </a> </nav> <h1> Search results </h1>';
+    let searchPage = `<html>
+	<body style="background-color: black; color: white;">
+	<nav style="background-color: purple: color: white; font-family: \'Raleway\', sans-serif;"> <a href="/search"> Back To Search </a> <a href="/login"> Log Out </a> </nav>
+	<h1 style="font-family: \'Montserrat\', sans-serif;"> Search results </h1>`;
     
     try {
         const search = req.body.movieSearch;
@@ -544,9 +554,9 @@ app.post('/search', async (req, res) => {
 				
                 if (movie.poster_path) {
 					
-					searchPage += `<div> <a href="/movie/${movie.id}"> ${movie.original_title} <img src="https://image.tmdb.org/t/p/w500${movie.poster_path}" alt="${movie.original_title}"> </a> </div>`;
+					searchPage += `<div> <a style="font-family: \'Raleway\', san-serif;" href="/movie/${movie.id}"> ${movie.original_title} <img src="https://image.tmdb.org/t/p/w500${movie.poster_path}" alt="${movie.original_title}"> </a> </div>`;
                 } else {
-					searchPage += `<div> <a href="/movie/${movie.id}"> ${movie.original_title} - No image available </a> </div>`
+					searchPage += `<div> <a style="font-family: \'Raleway\', sans-serif;" href="/movie/${movie.id}"> ${movie.original_title} - No image available </a> </div>`
                 }
             });
 			searchPage += '</body>'
