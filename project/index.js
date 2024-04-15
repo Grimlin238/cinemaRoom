@@ -45,7 +45,7 @@ app.get('/create', (req, res) => {
 	<h1 style="\'Montserrat\', sans-serif;"> Password? </h1>
 	<input type="password" name="password">
 	<p style="\'Open Sans\', sans-serif; font-family: 20px;"> Have an account?
-	<a href="/login"> Log in here. </a>
+	<a style="color: white;" href="/login"> Log in here. </a>
 	</p>
 	<button style="background-color: white; color: purple; font-family: \'Raleway\', sans-serif;"> Create Account </button>
 	</form>
@@ -125,7 +125,7 @@ app.get('/login', (req, res) => {
 	<h1 style="font-family: \'Montserrat\', sans-serif;"> password? </h1>
 	<input type="password" name="password">
 	<p style="\'Open Sans\', sans-serif; font-family: 20px;"> Don\'t have an account?
-	<a href="/create"> Create an account here. </a>
+	<a style="color: white;" href="/create"> Create an account here. </a>
 	</p>
 	<button style="background-color: white; color: purple; font-family: \'Raleway\', sans-serif;"> Log In </button>
 	</form>
@@ -446,7 +446,7 @@ app.post('/create', async (req, res) => {
 		<div style="text-align: center;">
 		<h1 style="font-family: \'Montserrat\', sans-serrif;"> Account created </h1>
 		<p style="font-family: \'Open Sans\', sans-serif; font-size: 20px;"> We\'re sorry. That account already exists. Head to the log in page to sign in. </p>
-		<a style="font-family: \'Raleway\', sans-serif;" href="/login"> Go To Log In </a>
+		<a style="color: white; font-family: \'Raleway\', sans-serif;" href="/login"> Go To Log In </a>
 		</div>
 		</body>
 		</html>`);
@@ -460,7 +460,7 @@ app.post('/create', async (req, res) => {
 		<div style="text-align: center;">
 		<h1 style="font-family: \'Monserrat\', sans-serif;"> Account Created! :-> </h1>
 		<p style="font-family: \'Montserrat\', sans-serif; font-size: 20px;"> Thanks for becoming a member. Click get started below. Have fun! </p>
-		<a style="font-family: \'Raleway\', sans-serif;" href="/home"> Get Started! </a>
+		<a style="color: white; font-family: \'Raleway\', sans-serif;" href="/home"> Get Started! </a>
 		</div>
 		</body>
 		</html>`)
