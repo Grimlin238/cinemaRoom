@@ -18,9 +18,9 @@ app.get('/', (req, res) => {
 	<div style="text-align: center;">
 	<h1 style="font-family: \'Montserrat\', sans-serif;"> Cinema Room </h1>
 	<p style="font-family: \'Open Sans\', sans-serif; font-family: 20px;"> The best movie reviewing platform.
-	<a href="/create"> Click here to create an account </a>
+	<a style="color: white;" href="/create"> Click here to create an account </a>
 	Have an account?
-	<a href="/login"> Log in now! </a>
+	<a style="color: white;" href="/login"> Log in now! </a>
 	</p>
 	</div>
 	</body>
@@ -65,7 +65,7 @@ try {
 	
 	let page = `<html>
 	<body style="background-color: black; color: white;">
-	<nav style="background-color: purple; color: white; font-family: \'Raleway\', sans-serif;"> <a href="/home"> Home </a> <a href="/top10"> Top 10 </a> <a href="/search"> Search </a> <a href="/login"> Log Out </a> </nav>
+	<nav style="background-color: purple; color: white; font-family: \'Raleway\', sans-serif;"> <div style="position: absolute; left: 0; font-family: \'Montserrat\', sans-serif;"> <p> &#x1F3A5; Cinema Room </p> </div> <div style="color: white; position: absolute; right: 0;"> <a href="/home"> Home </a> <a href="/top10"> Top 10 </a> <a href="/search"> Search </a> <a href="/login"> Log Out </a> </div> </nav>
 	<h1 style="font-family: \'Montserrat\', sans-serif;"> My Movies </h1>`
 	
 	if (myMovies.length === 0) {
@@ -76,11 +76,11 @@ try {
 		
 	} else  {
 		
-		page += '<div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr 1fr; gird-gap: 10px;">'
+		page += '<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;">'
 		
 	for (let i = 0; i < myMovies.length; i++) {
 		
-			page += `<div> <a style="font-family: \'Raleway\', sans-serif;" href="/mymovie/${myMovies[i]._id}"> ${myMovies[i].movieTitle} <img src="${myMovies[i].movieImage}" alt="${myMovies[i].movieTitle}"> </a></div>`
+			page += `<div> <h2> <a style="color: white; font-family: \'Raleway\', sans-serif;" href="/mymovie/${myMovies[i]._id}"> ${myMovies[i].movieTitle} <img src="${myMovies[i].movieImage}" alt="${myMovies[i].movieTitle}"> </a> </h2> </div>`
 		
 	}
 	
@@ -144,7 +144,7 @@ app.get('/movie/:id', async (req, res) => {
 			
 			let page = `<html>
 			<body style="background-color: black; color: white;">
-			<nav style="background-color: purple; color: white; font-family: \'Raleway\', sans-serif;"><a href="/home"> Home </a><a href="/top10"> Top 10 </a><a href="/search"> Search </a> <a href="/login"> Log Out </a> </nav>`;
+			<nav style="background-color: purple; color: white; font-family: \'Raleway\', sans-serif;"> <div style="position: absolute; left: 0; font-family: \'Montserrat\', sans-serif;"> <p> &#x1F3A5; Cinema Room </p> </div> <div style="color: white; position: absolute; right: 0;"> <a href="/home"> Home </a> <a href="/top10"> Top 10 </a> <a href="/search"> Search </a> <a href="/login"> Log Out </a> </div> </nav>` 
 			
 			page += '<div style="position: absolute; left: 0;">'
 
@@ -230,7 +230,7 @@ app.get('/mymovie/:id', async (req, res) => {
 		
 		let page = `<html>
 		<body style="background-color: black; color: white;">
-		<nav style="background-color: purple; color: white; font-family: \'Raleway\', sans-serif;"> <a href="/home"> Back to My Movies </a> <a href="/login"> Log Out </a> </nav>`
+		<nav style="background-color: purple; color: white; font-family: \'Raleway\', sans-serif;"> <a style="color: white;" href="/home"> Back to My Movies </a> <a style=" color: white; href="/login"> Log Out </a> </nav>`
 		
 		page += '<div style="position: absolute; left: 0;">'
 		page += '<div>'
@@ -254,7 +254,7 @@ app.get('/mymovie/:id', async (req, res) => {
 			
 			page += `<h2 style="font-family: \'Montserrat\', sans-serif;"> Your review </h2>`
 			
-			page += `<p style="font-family: \'Open Sans\', sans-serif;"> ${movie[i].movieReview} </p>`
+			page += `<p style="color: white; font-family: \'Open Sans\', sans-serif;"> ${movie[i].movieReview} </p>`
 			page += '<br>'
 			
 			page += '<div style="position: fixed; bottom: 0; right: 0;">'
@@ -345,7 +345,7 @@ app.get('/search', (req, res) => {
 	
 	res.send(`<html>
 	<body style="background-color: black; color: white;">
-	<nav style="background-color: purple: color: white; font-family: \'Raleway\', sans-serif;"> <a href="/home"> Home </a> <a href="/top10"> Top 10 </a> <a href="/search"> Search </a> <a href="/login"> Log Out </a> </nav>
+	<nav style="background-color: purple; color: white; font-family: \'Raleway\', sans-serif;"> <div style="color: white; position: absolute; left: 0; font-family: \'Montserrat\', sans-serif;"> <p> &#x1F3A5; Cinema Room </p> </div> <div style="position: absolute; right: 0;"> <a href="/home"> Home </a> <a href="/top10"> Top 10 </a> <a href="/search"> Search </a> <a href="/login"> Log Out </a> </div> </nav>
 	<div style="height: 100%; margin: 0; display: flex; justify-content: center; align-items: center; text-align: center;">
 	<form method="post">
 	<h1> Search For Movies </h1 style="font-family: \'Montserrat\', sans-serif;">
@@ -362,25 +362,26 @@ app.get('/top10', async (req, res) => {
 	
     let page = `<html>
 	<body style="background-color: black; color: white;">
-	<nav style="background-color: purple; color: white; font-family: \'Raleway\', sans-serif;"> <a href="/home"> Home </a> <a href="/top10"> Top 10 </a> <a href="/search"> Search </a> <a href="/login"> Log Out </a> </nav>
+	<nav style="background-color: purple; color: white; font-family: \'Raleway\', sans-serif;"> <div style="position: absolute; left: 0; font-family: \'Montserrat\', sans-serif;"> <p> &#x1F3A5; Cinema Room </p> </div> <div style="color: white; position: absolute; right: 0;"> <a href="/home"> Home </a> <a href="/top10"> Top 10 </a> <a href="/search"> Search </a> <a href="/login"> Log Out </a> </div> </nav>
 	<h1 style="font-family: \'Montserrat\', sans-serif;"> Top 10 Movies </h1>`;
     try {
         const response = await fetch("https://api.themoviedb.org/3/movie/top_rated?api_key=a26a1684ba14b7b49ebbd51f98eb95f7");
         const data = await response.json();
         const movies = data.results;
 
-		page += '<div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; grid-gap: 10px">'
+		page += '<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;">'
 		
 		if (movies && movies.length >= 0) {
 			
 			movies.slice(0, 10).forEach(movie => {
 				if (movie.poster_path) {
-        page += `<div> <a style="font-family: \'Raleway\', sans-serif;" href="/movie/${movie.id}"> ${movie.original_title} <img src="https://image.tmdb.org/t/p/w500${movie.poster_path}" alt="${movie.original_title}"> </a> </div>`
+					
+        page += `<div> <h2> <a style="color: white; font-family: \'Raleway\', sans-serif;" href="/movie/${movie.id}"> ${movie.original_title} <img src="https://image.tmdb.org/t/p/w500${movie.poster_path}" alt="${movie.original_title}"> </a> </h2> </div>`
 		
         } else {
-			
-            page += `<div> <a style="font-family: \'Raleway\', sans-serif;" href="${movieId}"> ${movie.original_title} - No Image available </a> </div>`
-			
+ 			
+            page += `<div> <h2> <a style="color: white; font-family: \'Raleway\', sans-serif;" href="${movieId}"> ${movie.original_title} - No Image available </a> </h2> </div>`
+ 
         }
 	})
 }
@@ -529,7 +530,7 @@ window.location.href = "/movie/${movieId}";
 app.post('/search', async (req, res) => {
     let searchPage = `<html>
 	<body style="background-color: black; color: white;">
-	<nav style="background-color: purple: color: white; font-family: \'Raleway\', sans-serif;"> <a href="/search"> Back To Search </a> <a href="/login"> Log Out </a> </nav>
+	<nav style="background-color: purple: color: white; font-family: \'Raleway\', sans-serif;"> <a style="color: white;" href="/search"> Back To Search </a> <a style="color: white;" href="/login"> Log Out </a> </nav>
 	<h1 style="font-family: \'Montserrat\', sans-serif;"> Search results </h1>`;
     
     try {
@@ -548,15 +549,15 @@ app.post('/search', async (req, res) => {
 		
         if (movies && movies.length > 0) {
 			
-			searchPage += '<div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; grid-gap: 10px;">'
-			
+			searchPage += '<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;">'
+	 		
             movies.slice(0, 20).forEach(movie => {
 				
                 if (movie.poster_path) {
 					
-					searchPage += `<div> <a style="font-family: \'Raleway\', san-serif;" href="/movie/${movie.id}"> ${movie.original_title} <img src="https://image.tmdb.org/t/p/w500${movie.poster_path}" alt="${movie.original_title}"> </a> </div>`;
+					searchPage += `<div> <h2> <a style="color: white; font-family: \'Raleway\', san-serif;" href="/movie/${movie.id}"> ${movie.original_title} <img src="https://image.tmdb.org/t/p/w500${movie.poster_path}" alt="${movie.original_title}"> </a> </h2> </div>`;
                 } else {
-					searchPage += `<div> <a style="font-family: \'Raleway\', sans-serif;" href="/movie/${movie.id}"> ${movie.original_title} - No image available </a> </div>`
+					searchPage += `<div> <h2> <a style="color: whitr; font-family: \'Raleway\', sans-serif;" href="/movie/${movie.id}"> ${movie.original_title} - No image available </a> </h2> </div>`
                 }
             });
 			searchPage += '</body>'
