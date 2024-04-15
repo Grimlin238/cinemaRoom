@@ -76,11 +76,16 @@ try {
 		
 	} else  {
 		
-		page += '<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;">'
+		page += '<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px;">'
 		
 	for (let i = 0; i < myMovies.length; i++) {
 		
-			page += `<div> <h2> <a style="color: white; font-family: \'Raleway\', sans-serif;" href="/mymovie/${myMovies[i]._id}"> ${myMovies[i].movieTitle} <img src="${myMovies[i].movieImage}" alt="${myMovies[i].movieTitle}"> </a> </h2> </div>`
+			page += `<div>
+		<h2 style="font-family: \'Montserrat\', sans-serif;"> ${myMovies[i].movieTitle} </h2>
+		<a href="/mymovie/${myMovies[i]._id}">
+		<img src="${myMovies[i].movieImage}" alt="${myMovies[i].movieTitle}">
+		</a>
+		</div>`
 		
 	}
 	
@@ -369,14 +374,19 @@ app.get('/top10', async (req, res) => {
         const data = await response.json();
         const movies = data.results;
 
-		page += '<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;">'
+		page += '<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px;">'
 		
 		if (movies && movies.length >= 0) {
 			
 			movies.slice(0, 10).forEach(movie => {
 				if (movie.poster_path) {
 					
-        page += `<div> <h2> <a style="color: white; font-family: \'Raleway\', sans-serif;" href="/movie/${movie.id}"> ${movie.original_title} <img src="https://image.tmdb.org/t/p/w500${movie.poster_path}" alt="${movie.original_title}"> </a> </h2> </div>`
+        page += `<div>
+					<h2 style="font-family: \'Montserrat\', sans-serif;"> ${movie.original_title} </h2>
+					<a href="/movie/${movie.id}">
+					<img src="https://image.tmdb.org/t/p/w500${movie.poster_path}" alt="${movie.original_title}">
+					</a>
+					</div>`
 		
         } else {
  			
@@ -549,13 +559,18 @@ app.post('/search', async (req, res) => {
 		
         if (movies && movies.length > 0) {
 			
-			searchPage += '<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;">'
+			searchPage += '<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px;">'
 	 		
             movies.slice(0, 20).forEach(movie => {
 				
                 if (movie.poster_path) {
 					
-					searchPage += `<div> <h2> <a style="color: white; font-family: \'Raleway\', san-serif;" href="/movie/${movie.id}"> ${movie.original_title} <img src="https://image.tmdb.org/t/p/w500${movie.poster_path}" alt="${movie.original_title}"> </a> </h2> </div>`;
+					searchPage += `<div>
+					<h2 style="font-family: \'Montserrat\', san-serif;"> ${movie.original_title} </h2>
+					<a href="/movie/${movie.id}">
+					<img src="https://image.tmdb.org/t/p/w500${movie.poster_path}" alt="${movie.original_title}">
+					</a>
+					</div>`;
                 } else {
 					searchPage += `<div> <h2> <a style="color: whitr; font-family: \'Raleway\', sans-serif;" href="/movie/${movie.id}"> ${movie.original_title} - No image available </a> </h2> </div>`
                 }
