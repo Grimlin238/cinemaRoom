@@ -1,5 +1,6 @@
 # Cinema Room
 # Created by Tyian Lashley
+# Capstone Project: Final Grade (A)
 # Any copying of the code in this repo without permission is strictly prohibited
 # About Cinema Room
 Cinema Room is a webapp that allows one to lookup movies and write reviews. Users can search for movies, view top 10 titles, and more. Users also have the ability to see the movies they have reviewed.
